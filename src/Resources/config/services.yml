@@ -1,0 +1,6 @@
+services:
+  _defaults:
+    autoconfigure: true
+  klimasofa.hook_listener:
+    class: Klimasofa\InserttagsBundle\EventListener\InserttagsListener
+    public: true
