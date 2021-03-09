@@ -4,14 +4,15 @@ declare(strict_types=1);
 
 namespace Klimasofa\InserttagsBundle\EventListener;
 
-use Contao\CoreBundle\ServiceAnnotation\Hook;
-
-/**
- * @Hook("replaceInsertTags")
- */
 class InserttagsListener
 {
-    public function __invoke(string $tag)
+    /**
+     * Replaces the Klimasofa insert tags.
+     *
+     * @param  string  $tag
+     * @return string|false
+     */
+    public function onReplaceInsertTags(string $tag)
     {
         $elements = explode('::', $tag);
         $key = strtolower($elements[0]);

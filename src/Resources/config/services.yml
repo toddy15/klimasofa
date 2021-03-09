@@ -1,6 +1,8 @@
 services:
   _defaults:
     autoconfigure: true
-  klimasofa.hook_listener:
+  klimasofa.insert_tags:
     class: Klimasofa\InserttagsBundle\EventListener\InserttagsListener
+    tags:
+      - { name: contao.hook, hook: replaceInsertTags }
     public: true

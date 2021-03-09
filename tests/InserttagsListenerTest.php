@@ -28,18 +28,18 @@ class InserttagsListenerTest extends TestCase
     {
         $listener = new InserttagsListener();
 
-        $this->assertFalse($listener('date'));
-        $this->assertFalse($listener('link_url::42'));
+        $this->assertFalse($listener->onReplaceInsertTags('date'));
+        $this->assertFalse($listener->onReplaceInsertTags('link_url::42'));
     }
 
     public function testItReplacesCO2Inserttags(): void
     {
         $listener = new InserttagsListener();
 
-        $this->assertEquals('CO<sub>2</sub>', $listener('co2'));
-        $this->assertEquals('CO<sub>2</sub>', $listener('CO2'));
-        $this->assertEquals('CO<sub>2</sub>', $listener('Co2'));
+        $this->assertEquals('CO<sub>2</sub>', $listener->onReplaceInsertTags('co2'));
+        $this->assertEquals('CO<sub>2</sub>', $listener->onReplaceInsertTags('CO2'));
+        $this->assertEquals('CO<sub>2</sub>', $listener->onReplaceInsertTags('Co2'));
 
-        $this->assertEquals('CO<sub>2</sub>', $listener('CO2::some-discarded-input'));
+        $this->assertEquals('CO<sub>2</sub>', $listener->onReplaceInsertTags('CO2::some-discarded-input'));
     }
 }
