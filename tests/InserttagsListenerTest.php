@@ -110,4 +110,54 @@ class InserttagsListenerTest extends TestCase
         $listener = new InserttagsListener(new DateTime("2021-03-01"));
         $this->assertEquals('41', $listener->onReplaceInsertTags('current_age::1980-02-29'));
     }
+
+    public function testItAcceptsValidDatesInIsoFormat(): void
+    {
+        $listener = new InserttagsListener(new DateTime("2021-11-23"));
+        $this->assertEquals('36', $listener->onReplaceInsertTags('current_age::1985-10-03'));
+        $this->assertEquals('36', $listener->onReplaceInsertTags('current_age::1985-10-13'));
+        $this->assertEquals('36', $listener->onReplaceInsertTags('current_age::1985-10-23'));
+        $this->assertEquals('36', $listener->onReplaceInsertTags('current_age::1985-10-31'));
+
+        $this->assertEquals('36', $listener->onReplaceInsertTags('current_age::1985-11-03'));
+        $this->assertEquals('36', $listener->onReplaceInsertTags('current_age::1985-11-13'));
+        $this->assertEquals('36', $listener->onReplaceInsertTags('current_age::1985-11-23'));
+        $this->assertEquals('35', $listener->onReplaceInsertTags('current_age::1985-11-30'));
+
+        $this->assertEquals('35', $listener->onReplaceInsertTags('current_age::1985-12-03'));
+        $this->assertEquals('35', $listener->onReplaceInsertTags('current_age::1985-12-13'));
+        $this->assertEquals('35', $listener->onReplaceInsertTags('current_age::1985-12-23'));
+        $this->assertEquals('35', $listener->onReplaceInsertTags('current_age::1985-12-31'));
+    }
+
+    public function testItRejectsInvalidDatesInIsoFormat(): void
+    {
+        $listener = new InserttagsListener(new DateTime("2021-11-23"));
+        $this->assertFalse($listener->onReplaceInsertTags('current_age::1985-23-45'));
+    }
+
+    public function testItAcceptsValidDatesInGermanFormat(): void
+    {
+        $listener = new InserttagsListener(new DateTime("2021-11-23"));
+        $this->assertEquals('36', $listener->onReplaceInsertTags('current_age::03.10.1985'));
+        $this->assertEquals('36', $listener->onReplaceInsertTags('current_age::13.10.1985'));
+        $this->assertEquals('36', $listener->onReplaceInsertTags('current_age::23.10.1985'));
+        $this->assertEquals('36', $listener->onReplaceInsertTags('current_age::31.10.1985'));
+
+        $this->assertEquals('36', $listener->onReplaceInsertTags('current_age::03.11.1985'));
+        $this->assertEquals('36', $listener->onReplaceInsertTags('current_age::13.11.1985'));
+        $this->assertEquals('36', $listener->onReplaceInsertTags('current_age::23.11.1985'));
+        $this->assertEquals('35', $listener->onReplaceInsertTags('current_age::30.11.1985'));
+
+        $this->assertEquals('35', $listener->onReplaceInsertTags('current_age::03.12.1985'));
+        $this->assertEquals('35', $listener->onReplaceInsertTags('current_age::13.12.1985'));
+        $this->assertEquals('35', $listener->onReplaceInsertTags('current_age::23.12.1985'));
+        $this->assertEquals('35', $listener->onReplaceInsertTags('current_age::31.12.1985'));
+    }
+
+    public function testItRejectsInvalidDatesInGermanFormat(): void
+    {
+        $listener = new InserttagsListener(new DateTime("2021-11-23"));
+        $this->assertFalse($listener->onReplaceInsertTags('current_age::45.23.1985'));
+    }
 }

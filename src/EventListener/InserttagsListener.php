@@ -42,12 +42,15 @@ class InserttagsListener
     /**
      * The tag {{current_age::*}} returns the current age
      * in years, calculated from the given birthday to today.
+     *
+     * @param  string  $date
+     * @return string|false
      */
     private function calculateCurrentAge(string $date)
     {
         // Make sure there is something sane to parse.
-        if (!preg_match('/[0-9]{4}-0?[0-9]-0?[0-9]/', $date) and
-            !preg_match('/0?[0-9]\.0?[0-9]\.[0-9]{4}/', $date)) {
+        if (!preg_match('/[0-9]{4}-[01]?[0-9]-[0123]?[0-9]/', $date) and
+            !preg_match('/[0123]?[0-9]\.[01]?[0-9]\.[0-9]{4}/', $date)) {
             return false;
         }
 
